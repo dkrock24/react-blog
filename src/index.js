@@ -1,40 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route , Link } from 'react-router-dom';
+import { BrowserRouter, Route , Link , withRouter } from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
 
 import Navbar from './components/NavBar/';
 import Login from './components/Login';
+import Signup from './components/Signup/';
 import Welcome from './components/Welcome/';
-import Footer from './components/Footer/';
+import Home from './components/Home/';
 import CreateArticle from './components/CreateArticle/';
 import SingleArticle from './components/SingleArticle';
+import Footer from './components/Footer/';
 
-const Home = ()  => {
-	return <h1>This is the home page </h1>
-};
-
-const About = ()  => {
-	return <h1>This is the about page </h1>
-};
-
-ReactDOM.render(
-
-	<BrowserRouter >
-
+const Main = withRouter(({location}) => {
+	return (
 		<div>
-			<Navbar />
+			{
+				location.pathname !== '/login' && location.pathname !== '/Signup' &&
+				<Navbar />
+			}			
 
 			<Route exact path="/" component={Welcome} />
 			<Route path="/home" component={Home} />
 			<Route path="/Login" component={Login} />
-			<Route path="/about" component={About} />
+			<Route path="/Signup" component={Signup} />
+			{/*<Route path="/about" component={About} />*/}
 			<Route path="/articles/create" component={CreateArticle} />
 			<Route path="/article/:slug" component={SingleArticle}/>
 			
-			<Footer />
+			{
+				location.pathname !== '/login' && location.pathname !== '/Signup' &&
+				<Footer />
+			}
 		</div>
+	);
+});
+
+ReactDOM.render(
+
+	<BrowserRouter >
+		<Main/>		
 	</BrowserRouter >
 
 	, document.getElementById('root'));
