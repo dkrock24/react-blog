@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route , Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ authUser }) => {
 
 	return (
 		  
@@ -26,21 +26,33 @@ const Navbar = () => {
 						<li className="nav-item">
 							<Link className="nav-link" to="articles/create">Write new article</Link>
 						</li>
-						<li className="nav-item">
-							<a className="nav-link" href="#">Hey Garry!
-								<i className="fa fa-caret-down"></i>
-							</a>
-							<div className="nav-submenu">
-								<a className="nav-link" href="page-login.html">My articles</a>
-								<a className="nav-link" href="">Logout</a>
-							</div>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-link" to="/login">Login</Link>
-						</li>
-						<li className="nav-item">
-							<a className="nav-link" href="register.html">Signup</a>
-						</li>
+						{
+							authUser &&
+								<li className="nav-item">
+								<a className="nav-link" href="#">Hey {authUser && authUser.user.name}
+									<i className="fa fa-caret-down"></i>
+								</a>
+								<div className="nav-submenu">
+									<a className="nav-link" href="page-login.html">My articles</a>
+									<a className="nav-link" href="">Logout</a>
+								</div>
+							</li>
+						}						
+
+						{
+							!authUser &&
+							<li className="nav-item">
+								<Link className="nav-link" to="/login">Login</Link>
+							</li>
+						}
+
+						{
+							!authUser &&
+							<li className="nav-item">
+								<a className="nav-link" href="Signup">Signup</a>
+							</li>
+						}
+						
 					</ul>
 				</div>
 			</div>

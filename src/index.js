@@ -13,27 +13,55 @@ import CreateArticle from './components/CreateArticle/';
 import SingleArticle from './components/SingleArticle';
 import Footer from './components/Footer/';
 
-const Main = withRouter(({location}) => {
-	return (
-		<div>
-			{
-				location.pathname !== '/login' && location.pathname !== '/Signup' &&
-				<Navbar />
-			}			
+class App extends React.Component{
 
-			<Route exact path="/" component={Welcome} />
-			<Route path="/home" component={Home} />
-			<Route path="/Login" component={Login} />
-			<Route path="/Signup" component={Signup} />
-			{/*<Route path="/about" component={About} />*/}
-			<Route path="/articles/create" component={CreateArticle} />
-			<Route path="/article/:slug" component={SingleArticle}/>
-			
-			{
-				location.pathname !== '/login' && location.pathname !== '/Signup' &&
-				<Footer />
-			}
-		</div>
+	constructor(){
+		super();
+		this.state = {
+			authUser: null
+		}
+	}
+
+	componentDidMount(){
+		const user = localStorage.getItem('user');
+		if(user){
+			this.setState({
+				authUser: JSON.parse(user)
+			})
+		}
+	}
+
+	render(){
+
+		const { location } = this.props;
+
+		return(
+			<div>
+				{
+					location.pathname !== '/login' && location.pathname !== '/Signup' &&
+					<Navbar authUser={ this.state.authUser } />
+				}			
+
+				<Route exact path="/" component={Welcome} />
+				<Route path="/home" component={Home} />
+				<Route path="/Login" component={Login} />
+				<Route path="/Signup" component={Signup} />
+				{/*<Route path="/about" component={About} />*/}
+				<Route path="/articles/create" component={CreateArticle} />
+				<Route path="/article/:slug" component={SingleArticle}/>
+				
+				{
+					location.pathname !== '/login' && location.pathname !== '/Signup' &&
+					<Footer />
+				}
+			</div>
+		)
+	}
+}
+
+const Main = withRouter( (props) => {
+	return (
+		<App {...props} />
 	);
 });
 

@@ -1,3 +1,12 @@
+## Basic Commands
+
+Forms Validations
+npm i --save indicative
+
+Axios
+npm i --save axios
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
