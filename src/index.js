@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route , Link , withRouter } from 'react-router-dom';
 
+import AuthService from './services/auth';
+
 import * as serviceWorker from './serviceWorker';
 
 import Navbar from './components/NavBar/';
@@ -12,6 +14,7 @@ import Home from './components/Home/';
 import CreateArticle from './components/CreateArticle/';
 import SingleArticle from './components/SingleArticle';
 import Footer from './components/Footer/';
+
 
 class App extends React.Component{
 
@@ -45,7 +48,11 @@ class App extends React.Component{
 				<Route exact path="/" component={Welcome} />
 				<Route path="/home" component={Home} />
 				<Route path="/Login" component={Login} />
-				<Route path="/Signup" component={Signup} />
+				<Route path="/Signup" render={
+					(props) => <Signup {... props}
+					registerUser={this.props.authService.registerUser}
+					setAuthUser={this.setAuthUser} />
+				}   />
 				{/*<Route path="/about" component={About} />*/}
 				<Route path="/articles/create" component={CreateArticle} />
 				<Route path="/article/:slug" component={SingleArticle}/>
@@ -61,7 +68,7 @@ class App extends React.Component{
 
 const Main = withRouter( (props) => {
 	return (
-		<App {...props} />
+		<App authService = { new AuthService() }  {...props} />
 	);
 });
 
