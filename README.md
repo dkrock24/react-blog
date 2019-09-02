@@ -6,6 +6,10 @@ npm i --save indicative
 Axios
 npm i --save axios
 
+esLint
+npm i -g eslint
+eslint --init
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
